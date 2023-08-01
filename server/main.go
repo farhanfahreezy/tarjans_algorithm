@@ -21,5 +21,15 @@ func main(){
 		})
 	})
 
+	r.GET("/Hellos", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"data":[]gin.H{{"nama":"Farhan", "umur": 20},
+			{"nama":"Eji", "umur": 20},
+			{"nama":"Gaga", "umur": 20},
+			{"nama":"Bava", "umur": 20}},
+		})
+	})
+
+
 	r.Run()
 }
