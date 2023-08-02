@@ -4,6 +4,7 @@ import (
 	"example/server/algorithm"
 	"example/server/initializers"
 	"fmt"
+	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,22 @@ func main(){
 			{"nama":"Gaga", "umur": 20},
 			{"nama":"Bava", "umur": 20}},
 		})
+	})
+
+	r.POST("/getAnswer", func(c *gin.Context){
+		var inputData algorithm.NodeInput
+		if err := c.ShouldBindJSON(&inputData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input data"})
+			return
+		}
+
+		ssc := algorithm.GetSSC(&inputData)
+		bridges := algorithm.GetBridges(&inputData)
+		answer := algorithm.Output{
+			SSCs: ssc,
+			Bridges: bridges,
+		}
+		c.JSON(http.StatusOK, gin.H{"result": answer})
 	})
 
 

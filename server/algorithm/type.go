@@ -20,3 +20,8 @@ type AdjacencyMatrix struct {
 type NodeInput struct {
 	Nodes [][]string
 }
+
+type Output struct {
+	SSCs    [][]string
+	Bridges [][]string
+}
