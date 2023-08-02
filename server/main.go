@@ -36,9 +36,27 @@ func mainn(){
 }
 
 func main(){
-	sscs := algorithm.GetSSC(algorithm.DummyNodes())
-	// sscs := algorithm.DummyNodes()
+	input := &algorithm.NodeInput{
+		Nodes: [][]string{
+			{"A","B"},
+			{"B","C"},
+			{"C","A"},
+			{"B","D"},
+			{"D","E"},
+			{"E","F"},
+			{"F","E"},
+		},
+	}
+
+	sscs := algorithm.GetSSC(input)
+	fmt.Println("SSC: ")
 	for _,ssc:= range sscs{
-		fmt.Println(ssc)
+			fmt.Println(ssc)
+	}
+
+	bridges := algorithm.GetBridges(input)
+	fmt.Println("Bridge New: ")
+	for _,bridge:= range bridges{
+		fmt.Println(bridge)
 	}
 }
