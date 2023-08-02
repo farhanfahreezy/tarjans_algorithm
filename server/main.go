@@ -12,7 +12,7 @@ func init(){
 	initializers.LoadEnvVariables()
 }
 
-func mainn(){
+func main(){
 	fmt.Println("Hello123")
 	r:= gin.Default()
 
@@ -35,7 +35,7 @@ func mainn(){
 	r.Run()
 }
 
-func main(){
+func mainn(){
 	input := &algorithm.NodeInput{
 		Nodes: [][]string{
 			{"A","B"},
