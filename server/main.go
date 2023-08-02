@@ -1,6 +1,7 @@
 package main
 
 import (
+	"example/server/algorithm"
 	"example/server/initializers"
 	"fmt"
 
@@ -11,7 +12,7 @@ func init(){
 	initializers.LoadEnvVariables()
 }
 
-func main(){
+func mainn(){
 	fmt.Println("Hello123")
 	r:= gin.Default()
 
@@ -32,4 +33,12 @@ func main(){
 
 
 	r.Run()
+}
+
+func main(){
+	sscs := algorithm.GetSSC(algorithm.DummyNodes())
+	// sscs := algorithm.DummyNodes()
+	for _,ssc:= range sscs{
+		fmt.Println(ssc)
+	}
 }
