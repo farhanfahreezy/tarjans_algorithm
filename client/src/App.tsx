@@ -1,5 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
+import FileInput from "./components/FileInput";
+import { inputToData, validateInputString } from "./components/validateInput";
+import { toast } from "react-hot-toast";
+import Visualization from "./components/Visualization";
 
 interface NodeInput {
   nodes: string[][];
@@ -11,6 +15,8 @@ interface Output {
 }
 
 function App() {
+  const [input, setInput] = useState("");
+
   const [data, setData] = useState<NodeInput>({
     nodes: [],
   });
@@ -20,26 +26,29 @@ function App() {
     SSCs: [],
   });
 
-  const buttonClick = () => {
-    setData({
-      nodes: [
-        ["A", "B"],
-        ["B", "C"],
-        ["C", "A"],
-        ["B", "D"],
-        ["D", "E"],
-        ["E", "F"],
-        ["F", "E"],
-      ],
-    });
+  const [runtime, setRuntime] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const BASE_URL = "http://localhost:3000/";
+
+  const submitInput = () => {
+    if (validateInputString(input)) {
+      const newNodes = inputToData(input);
+      setData({
+        nodes: newNodes,
+      });
+      toast.success("Converted Input");
+    } else {
+      toast.error("Wrong Input");
+      setData({
+        nodes: [],
+      });
+    }
   };
 
-  const buttonClick2 = async () => {
+  const getResponse = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/getAnswer",
-        data
-      );
+      const response = await axios.post(BASE_URL + "getAnswer", data);
       const responseData = response.data.result as Output;
       setAnswer(responseData);
     } catch (err) {
@@ -47,34 +56,27 @@ function App() {
     }
   };
 
+  const inputChange = (s: string) => {
+    setInput(s);
+  };
+
   return (
-    <div className="font-openSans min-h-screen w-full flex flex-col justify-center items-center">
-      <button
-        className="border-2 border-black py-2 px-4 rounded-md"
-        onClick={buttonClick}
-      >
-        Click Me
-      </button>
-      {data.nodes.map((node, index) => (
-        <div key={index}>{node}</div>
-      ))}
-      <button
-        className="border-2 border-black py-2 px-4 rounded-md"
-        onClick={buttonClick2}
-      >
-        Click Me 2
-      </button>
-      <div>
-        <div>SSCs</div>
-        {answer.SSCs.map((ssc, index) => (
-          <div key={index}>{ssc}</div>
-        ))}
+    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto flex flex-col md:flex-row justify-start items-center bg-secondaryWhite font-openSans">
+      <div className="md:w-1/3 w-full md:min-h-full bg-primaryWhite p-5 flex flex-col justify-center items-center shadow-md z-[1]">
+        <FileInput
+          value={input}
+          onChange={inputChange}
+          onSubmit={submitInput}
+          loading={loading}
+        />
       </div>
-      <div>
-        <div>Bridges</div>
-        {answer.Bridges.map((bridge, index) => (
-          <div key={index}>{bridge}</div>
-        ))}
+      <div className="md:w-2/3 w-full md:min-h-full bg-secondaryWhite p-5 flex flex-col justify-center items-center z-[0]">
+        <Visualization
+          data={data}
+          answer={answer}
+          loading={loading}
+          runtime={runtime}
+        />
       </div>
     </div>
   );
