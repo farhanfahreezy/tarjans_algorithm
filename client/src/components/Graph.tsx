@@ -1,26 +1,34 @@
+import { Options, Edge, Node } from "vis-network/standalone/esm/vis-network";
+import useVisNetwork from "./useVisNetwork";
+
 interface GraphProps {
-  nodeName: string[];
-  neighbour: string[][];
+  nodes: Node[];
+  edges: Edge[];
 }
 
-const Graph = ({ nodeName, neighbour }: GraphProps) => {
+const Graph = ({ nodes, edges }: GraphProps) => {
+  const options: Options = {
+    nodes: {
+      shape: "dot",
+      size: 10,
+    },
+    layout: {
+      hierarchical: {
+        enabled: false,
+      },
+    },
+  };
+
+  const { ref } = useVisNetwork({
+    options,
+    edges,
+    nodes,
+  });
+
   return (
-    <div>
-      <div className="flex flex-row gap-1">
-        {nodeName.map((node, index) => (
-          <div key={index}>{node}</div>
-        ))}
-      </div>
-      <div>
-        {neighbour.map((node, index) => (
-          <div key={index}>
-            {node[0]}
-            {"->"}
-            {node[1]}
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <div className="w-full h-full" ref={ref} />
+    </>
   );
 };
 

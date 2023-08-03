@@ -1,5 +1,8 @@
-export function dataToGraph(data: string[][], sscs: string[][]): string[][] {
-  const nodes: string[][] = [];
+import { Node, Edge } from "vis-network/standalone/esm/vis-network";
+
+export function dataToSSCEdge(data: string[][], sscs: string[][]): Edge[] {
+  const edges: Edge[] = [];
+  let id = 1;
 
   // all node that have pair
   for (let i = 0; i < sscs.length; i++) {
@@ -8,14 +11,48 @@ export function dataToGraph(data: string[][], sscs: string[][]): string[][] {
       if (child.length != 0) {
         for (const childNode of child) {
           if (sscs[i].includes(childNode)) {
-            const newPair = [node, childNode];
-            if (!nodes.includes(newPair)) {
-              nodes.push(newPair);
+            if (!isExistOnEdgeList(edges, node, childNode)) {
+              edges.push({
+                from: node,
+                to: childNode,
+                id: id++,
+                arrows: { to: true },
+              });
             }
           }
         }
       }
     }
+  }
+
+  return edges;
+}
+
+export function dataToEdge(data: string[][]): Edge[] {
+  const edges: Edge[] = [];
+  let id = 0;
+
+  for (const node of data) {
+    edges.push({
+      from: node[0],
+      to: node[1],
+      id: id++,
+      arrows: { to: true },
+    });
+  }
+
+  return edges;
+}
+
+export function getNodes(symbol: string[]): Node[] {
+  const nodes: Node[] = [];
+  const maxNodes = symbol.length;
+
+  for (let id = 0; id < maxNodes; id++) {
+    nodes.push({
+      id: symbol[id],
+      label: symbol[id],
+    });
   }
 
   return nodes;
@@ -41,4 +78,13 @@ function getChildren(data: string[][], check: string): string[] {
     }
   }
   return children;
+}
+
+function isExistOnEdgeList(edges: Edge[], from: string, to: string): boolean {
+  for (const edge of edges) {
+    if (edge.from == from && edge.to == to) {
+      return true;
+    }
+  }
+  return false;
 }

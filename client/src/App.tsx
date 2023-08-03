@@ -39,6 +39,10 @@ function App() {
         nodes: newNodes,
       });
       setSelected(1);
+      setAnswer({
+        SSCs: [],
+        Bridges: [],
+      });
       toast.success("Converted Input");
     } else {
       toast.error("Wrong Input");
@@ -77,7 +81,7 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto flex flex-col md:flex-row justify-start items-center bg-secondaryWhite font-openSans">
+    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto flex flex-col-reverse md:flex-row justify-start items-center bg-secondaryWhite font-openSans">
       <div className="md:w-1/3 w-full md:min-h-full bg-primaryWhite p-5 flex flex-col justify-center items-center shadow-md z-[1]">
         <FileInput
           value={input}

@@ -15,7 +15,7 @@ const FileInput = ({ value, onChange, onSubmit, loading }: FileInputProps) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full gap-5">
-      <div>Input Your Graph</div>
+      <div className="text-[20px] font-medium">Input Your Graph</div>
       <div>
         <textarea
           value={value}
