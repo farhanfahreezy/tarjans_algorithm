@@ -28,6 +28,7 @@ function App() {
 
   const [runtime, setRuntime] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState(1);
 
   const BASE_URL = "http://localhost:3000/";
 
@@ -37,6 +38,7 @@ function App() {
       setData({
         nodes: newNodes,
       });
+      setSelected(1);
       toast.success("Converted Input");
     } else {
       toast.error("Wrong Input");
@@ -47,17 +49,31 @@ function App() {
   };
 
   const getResponse = async () => {
+    setRuntime(0);
+    setLoading(true);
+    const start = performance.now();
+
     try {
       const response = await axios.post(BASE_URL + "getAnswer", data);
       const responseData = response.data.result as Output;
       setAnswer(responseData);
+      toast.success("SSCs and Bridges Found");
     } catch (err) {
       console.error(err);
+    } finally {
+      const end = performance.now();
+      const runtime = end - start;
+      setRuntime(runtime);
+      setLoading(false);
     }
   };
 
   const inputChange = (s: string) => {
     setInput(s);
+  };
+
+  const selectedChange = (n: number) => {
+    setSelected(n);
   };
 
   return (
@@ -76,6 +92,9 @@ function App() {
           answer={answer}
           loading={loading}
           runtime={runtime}
+          getAnswer={getResponse}
+          selected={selected}
+          selectedChange={selectedChange}
         />
       </div>
     </div>

@@ -20,6 +20,7 @@ const FileInput = ({ value, onChange, onSubmit, loading }: FileInputProps) => {
         <textarea
           value={value}
           onChange={handleChange}
+          placeholder={`Format:\n{node_1} {node_2}\n{node_1} {node_3}\n...`}
           className="block w-[300px] h-[50vh] resize-none px-3 py-2 bg-secondaryWhite border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none text-gray-900 transition-all"
         />
       </div>
