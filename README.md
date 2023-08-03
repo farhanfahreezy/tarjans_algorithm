@@ -16,8 +16,10 @@ Tarjans Algorithm Calculator is a fullstack web application built using React, T
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Framework](#framework)
 - [Contributing](#contributing)
 - [Contact](#contact)
+- [References](#references)
 
 ## Algorithm
 
@@ -81,6 +83,11 @@ Steps to Use the Web App:
 
 ![Bridge](readme/bridge.png)
 
+## Framework
+
+- `Frontend` : React, Typescript, axios, vis-network
+- `Backend` : Go, Gin, net/http
+
 ## Contributing
 
 Mohammad Farhan Fahrezy
@@ -89,3 +96,9 @@ Mohammad Farhan Fahrezy
 
 - [Personal Website](https://farhanfahreezy.site/)
 - [Linkedin](https://www.linkedin.com/in/farhanfahreezy/)
+
+## References
+
+- Bridges: https://www.youtube.com/watch?v=Rhxs4k6DyMM&t=866s
+- SSCs: https://www.youtube.com/watch?v=wUgWX0nc4NY
+- Gin tutorial: https://www.youtube.com/watch?v=lf_kiH_NPvM
