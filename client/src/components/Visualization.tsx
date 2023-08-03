@@ -46,6 +46,24 @@ const Visualization = ({
     edges: [],
   });
 
+  const visualizationOption = [
+    {
+      value: 1,
+      label: "Original Graph",
+      disabled: data.nodes.length == 0,
+    },
+    {
+      value: 2,
+      label: "SSCs",
+      disabled: data.nodes.length == 0,
+    },
+    {
+      value: 3,
+      label: "Bridges",
+      disabled: data.nodes.length == 0,
+    },
+  ];
+
   useEffect(() => {
     if (selected == 1) {
       setGraph({
@@ -94,33 +112,18 @@ const Visualization = ({
           <div className=" bg-gray-400 w-full h-[1px] my-2" />
           <div className="mb-2">Choose Visualization</div>
           <div className="flex flex-col justify-center items-center text-white gap-1">
-            <button
-              disabled={data.nodes.length == 0}
-              onClick={() => {
-                selectedChange(1);
-              }}
-              className="disabled:bg-dimBlue disabled:cursor-not-allowed bg-primaryBlue w-full py-2 px-6 rounded-md text-white font-medium hover:scale-105 active:scale-95 disabled:hover:scale-100 transition-all"
-            >
-              Original Graph
-            </button>
-            <button
-              disabled={answer.SSCs.length == 0}
-              onClick={() => {
-                selectedChange(2);
-              }}
-              className="disabled:bg-dimBlue disabled:cursor-not-allowed bg-primaryBlue w-full py-2 px-6 rounded-md text-white font-medium hover:scale-105 active:scale-95 disabled:hover:scale-100 transition-all"
-            >
-              SSCs
-            </button>
-            <button
-              disabled={answer.Bridges.length == 0}
-              onClick={() => {
-                selectedChange(3);
-              }}
-              className="disabled:bg-dimBlue disabled:cursor-not-allowed bg-primaryBlue w-full py-2 px-6 rounded-md text-white font-medium hover:scale-105 active:scale-95 disabled:hover:scale-100 transition-all"
-            >
-              Bridges
-            </button>
+            {visualizationOption.map((opt, index) => (
+              <button
+                disabled={opt.disabled}
+                onClick={() => {
+                  selectedChange(opt.value);
+                }}
+                key={index}
+                className={`disabled:bg-dimBlue disabled:cursor-not-allowed bg-primaryBlue w-full py-2 px-6 rounded-md text-white font-medium hover:scale-105 active:scale-95 disabled:hover:scale-100 transition-all`}
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
